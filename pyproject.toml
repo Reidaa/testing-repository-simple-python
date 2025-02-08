@@ -1,0 +1,22 @@
+[project]
+name = "testing-repository-simple-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask==2.2.3",
+    "flask-cors==4.0.0",
+    "flask-jwt-extended==4.4.4",
+    "pyjwt~=2.8.0",
+    "werkzeug~=2.3.6",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "flake8>=7.1.1",
+    "gitpython==3.1.31",
+    "pre-commit>=4.1.0",
+    "reorder-python-imports>=3.14.0",
+]

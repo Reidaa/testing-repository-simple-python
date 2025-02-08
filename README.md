@@ -4,7 +4,6 @@ This repository is not for having a working job, it is actually only used to sho
 
 ## Installation
 
-
 Ensure you have installed dependencies.
 
 ```shell
@@ -40,3 +39,7 @@ Then launch the python application.
 ```shell
 python app.py
 ```
+
+## TODO
+
+- [ ] PostgreSQL DB
