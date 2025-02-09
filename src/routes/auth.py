@@ -1,11 +1,9 @@
 import json
 
-from flask import Blueprint
-from flask import jsonify
-from flask import request
+from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 
-from src.static import DATA_FILE_PATH
+from src.env import env
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -24,7 +22,7 @@ def authenticate():
             }
         )
 
-    with open(DATA_FILE_PATH, encoding="utf-8", mode="w+") as data_file:
+    with open(env.DATA_FILE_PATH, encoding="utf-8", mode="w+") as data_file:
         try:
             data = json.load(data_file)
         except json.decoder.JSONDecodeError:

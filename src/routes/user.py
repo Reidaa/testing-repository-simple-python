@@ -1,11 +1,9 @@
 import json
 
-from flask import Blueprint
-from flask import jsonify
-from flask_jwt_extended import current_user
-from flask_jwt_extended import jwt_required
+from flask import Blueprint, jsonify
+from flask_jwt_extended import current_user, jwt_required
 
-from src.static import DATA_FILE_PATH
+from src.env import env
 from src.utils.misc import capitalize_name
 
 user_bp = Blueprint("user_bp", __name__)
@@ -14,7 +12,7 @@ user_bp = Blueprint("user_bp", __name__)
 @user_bp.route("/id")
 @jwt_required()
 def get_user_id():
-    with open(DATA_FILE_PATH, encoding="utf-8", mode="r") as data_file:
+    with open(env.DATA_FILE_PATH, encoding="utf-8", mode="r") as data_file:
         data = json.load(data_file)
 
         try:

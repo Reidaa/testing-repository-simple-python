@@ -4,7 +4,7 @@ from typing import Dict
 from flask import jsonify
 from flask_jwt_extended import JWTManager
 
-from src.static import DATA_FILE_PATH
+from src.env import env
 
 
 def register_jwt_handlers(jwt: JWTManager):
@@ -13,7 +13,7 @@ def register_jwt_handlers(jwt: JWTManager):
         _jwt_header: Dict[str, str], jwt_data: Dict[str, Dict[str, str]]
     ):
         identity = jwt_data["sub"]
-        with open(DATA_FILE_PATH, encoding="utf-8", mode="r") as data_file:
+        with open(env.DATA_FILE_PATH, encoding="utf-8", mode="r") as data_file:
             try:
                 data = json.load(data_file)
             except json.decoder.JSONDecodeError:
