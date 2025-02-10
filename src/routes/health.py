@@ -28,4 +28,7 @@ def get_health():
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
 
+    if not healthy:
+        r.status_code = 503
+
     return r
