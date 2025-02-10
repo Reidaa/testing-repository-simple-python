@@ -1,6 +1,7 @@
 import psutil
 
 from src.t import CheckModel
+from src.utils.misc import convert_size
 
 
 def check_memory():
@@ -11,8 +12,8 @@ def check_memory():
         healthy=(memory.percent < 80),
         data={
             "percent": memory.percent,
-            "available": memory.available,
-            "total": memory.total,
+            "available": convert_size(memory.available),
+            "total": convert_size(memory.total),
         },
     )
 
