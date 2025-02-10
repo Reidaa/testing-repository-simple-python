@@ -14,7 +14,7 @@ This repository is not for having a working job, it is actually only used to sho
   - [ ] non-root user
 - [ ] Test
 - [ ] PostgreSQL DB
-- [ ] Logging
+- [x] Logging
 - [ ] Ratelimiting
 - [ ] Healthcheck(s)
   - [x] check memory
