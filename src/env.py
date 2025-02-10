@@ -4,11 +4,7 @@ from dotenv import load_dotenv
 
 from src.t import EnvModel
 
-load_dotenv(override=True)
-
-
-# dotenv_path = os.path.join(APP_ROOT, ".env")
-# load_dotenv(dotenv_path)
+load_dotenv(dotenv_path=".env", override=True, verbose=True)
 
 
 env = EnvModel(

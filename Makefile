@@ -24,7 +24,7 @@ docker:
 .PHONY: docker-run
 docker-run: docker
 		docker run \
-			-e DEBUG=False \
+			-e DEBUG=True \
 			-e PORT=8080 \
 			-e SECRET_KEY="secret" \
 			-e JWT_ACCESS_TOKEN_EXPIRES=15 \

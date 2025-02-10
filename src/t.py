@@ -1,12 +1,6 @@
 from typing import Any, Optional
 
-from pydantic import (
-    BaseModel,
-    StrictBool,
-    StrictStr,
-    PositiveInt,
-    SecretStr,
-)
+from pydantic import BaseModel, PositiveInt, SecretStr, StrictBool, StrictStr
 
 
 class EnvModel(BaseModel):
