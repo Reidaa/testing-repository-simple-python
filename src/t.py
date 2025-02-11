@@ -1,15 +1,16 @@
 from typing import Any, Optional
 
-from pydantic import BaseModel, PositiveInt, SecretStr, StrictBool, StrictStr
+from pydantic import BaseModel, PositiveInt, RedisDsn, SecretStr, StrictBool, StrictStr
 
 
 class EnvModel(BaseModel):
     DEBUG: bool
     PORT: PositiveInt
-    # DATABASE_URL: PostgresDsn
-    DATA_FILE_PATH: StrictStr
     SECRET_KEY: SecretStr
     JWT_ACCESS_TOKEN_EXPIRES: PositiveInt
+    DATA_FILE_PATH: StrictStr
+    REDIS_URL: RedisDsn
+    # DATABASE_URL: PostgresDsn
 
 
 class CheckModel(BaseModel):

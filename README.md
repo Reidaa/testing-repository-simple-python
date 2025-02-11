@@ -15,9 +15,10 @@ This repository is not for having a working job, it is actually only used to sho
 - [ ] Test
 - [ ] PostgreSQL DB
 - [x] Logging
-- [ ] Ratelimiting
+- [x] Ratelimiting
 - [ ] Healthcheck(s)
   - [x] check memory
   - [ ] check CPU
   - [ ] check Database availability
+  - [x] check redis availability
   - [x] disable caching

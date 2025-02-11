@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 
 from src.t import CheckModel, HealthResponseModel
-from src.utils.check import check_memory
+from src.utils.check import check_memory, check_redis
 
 health_bp = Blueprint("health", __name__, url_prefix="/health")
 
@@ -12,6 +12,7 @@ def get_health():
     healthy: bool = True
 
     checks.append(check_memory())
+    checks.append(check_redis())
 
     for check in checks:
         if not check.healthy:

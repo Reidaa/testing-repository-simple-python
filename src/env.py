@@ -8,6 +8,7 @@ load_dotenv(dotenv_path=".env", override=True, verbose=True)
 
 
 env = EnvModel(
+    REDIS_URL=os.getenv("REDIS_URL"),
     DEBUG=os.getenv("DEBUG"),
     PORT=os.getenv("PORT"),
     DATA_FILE_PATH=os.getenv("DATA_FILE_PATH", default="data.json"),

@@ -3,6 +3,8 @@ from datetime import timedelta
 from flask import Flask
 from flask_cors import CORS  # type: ignore
 from flask_jwt_extended import JWTManager
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 from src.env import env
 from src.routes.auth import auth_bp
@@ -13,6 +15,15 @@ from src.utils.jwt import register_jwt_handlers
 
 def create_app():
     application = Flask("dstt", instance_relative_config=True)
+
+    limiter = Limiter(
+        get_remote_address,
+        app=application,
+        default_limits=["200 per day", "50 per hour"],
+        storage_uri=str(env.REDIS_URL),
+        storage_options={"socket_connect_timeout": 30},
+        strategy="fixed-window",
+    )
 
     application.register_blueprint(auth_bp)
     application.register_blueprint(user_bp)
