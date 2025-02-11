@@ -1,6 +1,7 @@
 from typing import Any, Optional
 
-from pydantic import BaseModel, PositiveInt, RedisDsn, SecretStr, StrictBool, StrictStr
+from pydantic import (BaseModel, PositiveInt, RedisDsn, SecretStr, StrictBool,
+                      StrictStr)
 
 
 class EnvModel(BaseModel):

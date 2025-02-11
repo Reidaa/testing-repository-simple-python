@@ -32,7 +32,7 @@ def create_app():
     application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
         minutes=env.JWT_ACCESS_TOKEN_EXPIRES
     )
-    application.config["JWT_SECRET_KEY"] = env.SECRET_KEY
+    application.config["JWT_SECRET_KEY"] = str(env.SECRET_KEY)
 
     jwt_manager = JWTManager(application)
     register_jwt_handlers(jwt_manager)

@@ -1,11 +1,10 @@
 import psutil
+from redis import ConnectionError, Redis
 
-from src.t import CheckModel
 from src.env import env
-from src.utils.misc import convert_size
 from src.logger import logger
-
-from redis import Redis, ConnectionError
+from src.t import CheckModel
+from src.utils.misc import convert_size
 
 
 def check_memory():

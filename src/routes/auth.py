@@ -42,7 +42,13 @@ def authenticate():
             identity=identity, fresh=True, additional_claims={}
         )
 
-        response = {"success": True, "return": {"access": access_token}, "code": 200}
+        response = {
+            "success": True,
+            "return": {
+                "access": access_token,
+            },
+            "code": 200,
+        }
 
         resp = jsonify(response)
 
