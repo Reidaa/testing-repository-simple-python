@@ -1,7 +1,7 @@
 from typing import Any, Optional
 
-from pydantic import (BaseModel, PositiveInt, RedisDsn, SecretStr, StrictBool,
-                      StrictStr)
+from pydantic import (BaseModel, PositiveInt, PostgresDsn, RedisDsn, SecretStr,
+                      StrictBool, StrictStr)
 
 
 class EnvModel(BaseModel):
@@ -11,7 +11,7 @@ class EnvModel(BaseModel):
     JWT_ACCESS_TOKEN_EXPIRES: PositiveInt
     DATA_FILE_PATH: StrictStr
     REDIS_URL: RedisDsn
-    # DATABASE_URL: PostgresDsn
+    DATABASE_URL: PostgresDsn
 
 
 class CheckModel(BaseModel):

@@ -1,53 +1,45 @@
-import json
-from abc import ABCMeta, abstractmethod
-from pathlib import Path
-from typing import List
+from urllib.parse import urlparse
 
+from pony import orm
+
+from src.database.BaseRepository import BaseRepository
+from src.database.models import db
+from src.database.models.User import User
 from src.env import env
-from src.logger import logger
 
 
-class BaseRepository(metaclass=ABCMeta):
-    @abstractmethod
-    def read(self) -> List[any]:
-        raise NotImplementedError
-
-    @abstractmethod
-    def insert(self, id: int) -> None:
-        raise NotImplementedError
-
-
-class UserRepository(BaseRepository):
+class DBUserRepository(BaseRepository):
     def __init__(self):
         super().__init__()
-        self._filepath = Path(env.DATA_FILE_PATH)
+        p = urlparse(str(env.DATABASE_URL))
 
-        if not self._filepath.exists():
-            self._filepath.touch()
+        # db.bind(provider="sqlite", filename="database.sqlite", create_db=True)
+        db.bind(
+            provider="postgres",
+            dbname=p.path[1:],
+            user=p.username,
+            password=p.password,
+            port=p.port,
+            host=p.hostname,
+        )
+        db.generate_mapping(create_tables=True)
 
+    @orm.db_session
     def read(self) -> dict[str, list[str]]:
-        with open(self._filepath, encoding="utf-8", mode="r") as data_file:
-            try:
-                data = json.loads(data_file.read())
-            except json.decoder.JSONDecodeError as e:
-                logger.warning(e)
-                data = {"users": []}
+        users: list[str] = []
 
-        return data
+        db_user = orm.select(u for u in User)
 
+        for u in db_user:
+            users.append(u.username)
+
+        return {
+            "users": users,
+        }
+
+    @orm.db_session
     def insert(self, username: str) -> None:
-        users = self.read()["users"]
-
-        if username in users:
-            logger.info("user already exists")
-            return
-
-        users.append(username)
-
-        new_data = {"users": users}
-
-        with open(str(env.DATA_FILE_PATH), encoding="utf-8", mode="w") as data_file:
-            json.dump(new_data, data_file, ensure_ascii=False, indent=4)
+        User(username=username)
 
 
-user_repository = UserRepository()
+user_repository = DBUserRepository()

@@ -12,7 +12,7 @@ env = EnvModel(
     DEBUG=os.getenv("DEBUG"),
     PORT=os.getenv("PORT"),
     DATA_FILE_PATH=os.getenv("DATA_FILE_PATH", default="data.json"),
-    # DATABASE_URL=os.getenv("DATABASE_URL"),
+    DATABASE_URL=os.getenv("DATABASE_URL"),
     SECRET_KEY=os.getenv("SECRET_KEY"),
     JWT_ACCESS_TOKEN_EXPIRES=os.getenv("JWT_ACCESS_TOKEN_EXPIRES"),
 )

@@ -13,7 +13,7 @@ This repository is not for having a working job, it is actually only used to sho
   - [x] .dockerignore
   - [ ] non-root user
 - [ ] Test
-- [ ] PostgreSQL DB
+- [x] PostgreSQL DB
 - [x] Logging
 - [x] Ratelimiting
 - [ ] Healthcheck(s)
