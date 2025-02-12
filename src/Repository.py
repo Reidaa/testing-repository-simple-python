@@ -24,7 +24,11 @@ class BaseRepository(metaclass=ABCMeta):
 class Repository(BaseRepository):
     def __init__(self):
         super().__init__()
+        self.data: dict[str, list[str]]
         self._filepath = Path(env.DATA_FILE_PATH)
+
+        if not self._filepath.exists():
+            self._filepath.touch()
 
         with open(self._filepath, encoding="utf-8", mode="r") as data_file:
             try:
@@ -35,7 +39,7 @@ class Repository(BaseRepository):
 
         self.data = data
 
-    def read(self):
+    def read(self) -> dict[str, list]:
         return self.data
 
     def insert_many(self, ids: List[int]) -> None:
