@@ -13,23 +13,19 @@ class BaseRepository(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def insert_many(self, ids: List[int]) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
     def insert(self, id: int) -> None:
         raise NotImplementedError
 
 
-class Repository(BaseRepository):
+class UserRepository(BaseRepository):
     def __init__(self):
         super().__init__()
-        self.data: dict[str, list[str]]
         self._filepath = Path(env.DATA_FILE_PATH)
 
         if not self._filepath.exists():
             self._filepath.touch()
 
+    def read(self) -> dict[str, list[str]]:
         with open(self._filepath, encoding="utf-8", mode="r") as data_file:
             try:
                 data = json.loads(data_file.read())
@@ -37,23 +33,21 @@ class Repository(BaseRepository):
                 logger.warning(e)
                 data = {"users": []}
 
-        self.data = data
-
-    def read(self) -> dict[str, list]:
-        return self.data
-
-    def insert_many(self, ids: List[int]) -> None:
-        raise NotImplementedError
+        return data
 
     def insert(self, username: str) -> None:
-        if username in self.data["users"]:
+        users = self.read()["users"]
+
+        if username in users:
             logger.info("user already exists")
             return
 
-        self.data["users"].append(username)
+        users.append(username)
 
-        with open(str(env.DATA_FILE_PATH), encoding="utf-8", mode="w+") as data_file:
-            json.dump(self.data, data_file, ensure_ascii=False, indent=4)
+        new_data = {"users": users}
+
+        with open(str(env.DATA_FILE_PATH), encoding="utf-8", mode="w") as data_file:
+            json.dump(new_data, data_file, ensure_ascii=False, indent=4)
 
 
-repository = Repository()
+user_repository = UserRepository()

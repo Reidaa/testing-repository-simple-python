@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_jwt_extended import current_user, jwt_required
 
-from src.Repository import repository
+from src.database.Repository import user_repository
 from src.utils.misc import capitalize_name
 
 user_bp = Blueprint("user_bp", __name__)
@@ -10,7 +10,7 @@ user_bp = Blueprint("user_bp", __name__)
 @user_bp.route("/id")
 @jwt_required()
 def get_user_id():
-    data = repository.read()
+    data = user_repository.read()
 
     try:
         return f"Your id is : {data['users'].index(current_user['username'])}", 200

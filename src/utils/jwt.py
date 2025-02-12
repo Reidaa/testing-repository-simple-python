@@ -3,7 +3,7 @@ from typing import Dict
 from flask import jsonify
 from flask_jwt_extended import JWTManager
 
-from src.Repository import repository
+from src.database.Repository import user_repository
 
 
 def register_jwt_handlers(jwt: JWTManager):
@@ -12,9 +12,9 @@ def register_jwt_handlers(jwt: JWTManager):
         _jwt_header: Dict[str, str], jwt_data: Dict[str, Dict[str, str]]
     ):
         identity = jwt_data["sub"]
-        data = repository.read()
+        users = user_repository.read()["users"]
 
-        if data["users"][identity["id"]] != identity["username"]:
+        if users[identity["id"]] != identity["username"]:
             return None
         return identity
 

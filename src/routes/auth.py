@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 
-from src.Repository import repository
+from src.database.Repository import user_repository
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -20,7 +20,7 @@ def authenticate():
             }
         )
 
-    data = repository.read()
+    data = user_repository.read()
 
     try:
         id = data["users"].index(username)
@@ -48,6 +48,6 @@ def authenticate():
 
     resp = jsonify(response)
 
-    repository.insert(username)
+    user_repository.insert(username)
 
     return resp
