@@ -1,4 +1,5 @@
 import psutil
+import psycopg2
 from redis import ConnectionError, Redis
 
 from src.env import env
@@ -39,6 +40,18 @@ def check_redis():
 
     c = CheckModel(
         name="redis",
+        healthy=healthy,
+    )
+
+    return c
+
+
+# TODO
+def check_postgres_db():
+    healthy = True
+
+    c = CheckModel(
+        name="postgres",
         healthy=healthy,
     )
 
