@@ -4,6 +4,8 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 
 from src.env import env
+from src.logger import logger
+from src.Repository import repository
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -22,37 +24,32 @@ def authenticate():
             }
         )
 
-    with open(env.DATA_FILE_PATH, encoding="utf-8", mode="w+") as data_file:
-        try:
-            data = json.load(data_file)
-        except json.decoder.JSONDecodeError:
-            data = {"users": []}
+    data = repository.read()
 
-        try:
-            id = data["users"].index(username)
-        except ValueError:
-            id = len(data["users"])
+    try:
+        id = data["users"].index(username)
+    except ValueError:
+        id = len(data["users"])
 
-        identity = {
-            "id": id,
-            "username": username,
-        }
+    identity = {
+        "id": id,
+        "username": username,
+    }
 
-        access_token = create_access_token(
-            identity=identity, fresh=True, additional_claims={}
-        )
+    access_token = create_access_token(
+        identity=identity, fresh=True, additional_claims={}
+    )
 
-        response = {
-            "success": True,
-            "return": {
-                "access": access_token,
-            },
-            "code": 200,
-        }
+    response = {
+        "success": True,
+        "return": {
+            "access": access_token,
+        },
+        "code": 200,
+    }
 
-        resp = jsonify(response)
+    resp = jsonify(response)
 
-        data["users"].append(username)
-        json.dump(data, data_file, ensure_ascii=False, indent=4)
+    repository.insert(username)
 
-        return resp
+    return resp
