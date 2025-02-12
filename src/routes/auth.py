@@ -1,10 +1,6 @@
-import json
-
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 
-from src.env import env
-from src.logger import logger
 from src.Repository import repository
 
 auth_bp = Blueprint("auth_bp", __name__)
@@ -37,7 +33,9 @@ def authenticate():
     }
 
     access_token = create_access_token(
-        identity=identity, fresh=True, additional_claims={}
+        identity=identity,
+        fresh=True,
+        additional_claims={},
     )
 
     response = {

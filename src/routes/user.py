@@ -1,9 +1,6 @@
-import json
-
 from flask import Blueprint, jsonify
 from flask_jwt_extended import current_user, jwt_required
 
-from src.env import env
 from src.Repository import repository
 from src.utils.misc import capitalize_name
 

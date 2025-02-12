@@ -1,10 +1,9 @@
-import json
 from typing import Dict
 
 from flask import jsonify
 from flask_jwt_extended import JWTManager
 
-from src.env import env
+from src.Repository import repository
 
 
 def register_jwt_handlers(jwt: JWTManager):
@@ -13,14 +12,10 @@ def register_jwt_handlers(jwt: JWTManager):
         _jwt_header: Dict[str, str], jwt_data: Dict[str, Dict[str, str]]
     ):
         identity = jwt_data["sub"]
-        with open(env.DATA_FILE_PATH, encoding="utf-8", mode="r") as data_file:
-            try:
-                data = json.load(data_file)
-            except json.decoder.JSONDecodeError:
-                return None
+        data = repository.read()
 
-            if data["users"][identity["id"]] != identity["username"]:
-                return None
+        if data["users"][identity["id"]] != identity["username"]:
+            return None
         return identity
 
     @jwt.expired_token_loader
