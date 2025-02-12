@@ -1,7 +1,0 @@
-black
-flake8
-reorder-python-imports
-pre-commit
-gitpython==3.1.31
-
--r requirements.txt
