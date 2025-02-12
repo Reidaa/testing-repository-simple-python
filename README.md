@@ -22,3 +22,4 @@ This repository is not for having a working job, it is actually only used to sho
   - [ ] check Database availability
   - [x] check redis availability
   - [x] disable caching
+- [ ] Reverse proxy
